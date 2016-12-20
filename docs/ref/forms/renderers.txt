@@ -45,9 +45,16 @@ Built-in-template form renderers
 
 .. class:: DjangoTemplateRenderer
 
-This renderer uses a :class:`~django.template.backends.django.DjangoTemplates`
-engine. It loads templates first from the built-in form templates directory in
-``django/forms`` and then from the installed apps' templates directories.
+This renderer uses a standalone
+:class:`~django.template.backends.django.DjangoTemplates`
+engine (unconnected to what you might have configured in the
+:setting:`TEMPLATES` setting). It loads templates first from the built-in form
+templates directory in ``django/forms`` and then from the installed apps'
+templates directories.
+
+If you want to render templates with customizations from your
+:setting:`TEMPLATES` setting, such as context processors for example, use the
+:class:`ProjectTemplateRenderer`.
 
 ``Jinja2TemplateRenderer``
 --------------------------
