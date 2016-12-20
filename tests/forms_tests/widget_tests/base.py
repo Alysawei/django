@@ -1,6 +1,4 @@
-from django.forms.renderers import (
-    DjangoTemplateRenderer, Jinja2TemplateRenderer,
-)
+from django.forms.renderers import DjangoTemplates, Jinja2
 from django.test import SimpleTestCase
 
 try:
@@ -14,8 +12,8 @@ class WidgetTest(SimpleTestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.django_renderer = DjangoTemplateRenderer()
-        cls.jinja2_renderer = Jinja2TemplateRenderer() if jinja2 else None
+        cls.django_renderer = DjangoTemplates()
+        cls.jinja2_renderer = Jinja2() if jinja2 else None
         cls.renderers = [cls.django_renderer] + ([cls.jinja2_renderer] if cls.jinja2_renderer else [])
         super(WidgetTest, cls).setUpClass()
 

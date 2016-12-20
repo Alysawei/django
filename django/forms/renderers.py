@@ -23,7 +23,7 @@ def get_default_renderer():
     return renderer_class()
 
 
-class BaseTemplateRenderer(object):
+class BaseRenderer(object):
     def get_template(self, template_name):
         raise NotImplementedError('subclasses must implement get_template()')
 
@@ -32,7 +32,7 @@ class BaseTemplateRenderer(object):
         return template.render(context, request=request).strip()
 
 
-class EngineRendererMixin(object):
+class EngineMixin(object):
     def get_template(self, template_name):
         return self.engine.get_template(template_name)
 
@@ -46,7 +46,7 @@ class EngineRendererMixin(object):
         })
 
 
-class DjangoTemplateRenderer(EngineRendererMixin, BaseTemplateRenderer):
+class DjangoTemplates(EngineMixin, BaseRenderer):
     """
     Load Django templates from the built-in widget templates in
     django/forms/templates and from app directories.
@@ -54,7 +54,7 @@ class DjangoTemplateRenderer(EngineRendererMixin, BaseTemplateRenderer):
     backend = DjangoTemplates
 
 
-class Jinja2TemplateRenderer(EngineRendererMixin, BaseTemplateRenderer):
+class Jinja2(EngineMixin, BaseRenderer):
     """
     Load Jinja2 templates from the built-in widget templates in
     django/forms/jinja2 and form app directories.
@@ -62,7 +62,7 @@ class Jinja2TemplateRenderer(EngineRendererMixin, BaseTemplateRenderer):
     backend = Jinja2
 
 
-class ProjectTemplateRenderer(BaseTemplateRenderer):
+class TemplatesSetting(BaseRenderer):
     """
     Load templates using template.loader.get_template() which is configured
     based on settings.TEMPLATES.

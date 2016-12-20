@@ -2,8 +2,7 @@ import os
 import unittest
 
 from django.forms.renderers import (
-    BaseTemplateRenderer, DjangoTemplateRenderer, Jinja2TemplateRenderer,
-    ProjectTemplateRenderer,
+    BaseRenderer, DjangoTemplates, Jinja2, TemplatesSetting,
 )
 from django.test import SimpleTestCase
 from django.utils._os import upath
@@ -36,18 +35,18 @@ class BaseTemplateRendererTests(SimpleTestCase):
 
     def test_get_renderer(self):
         with self.assertRaisesMessage(NotImplementedError, 'subclasses must implement get_template()'):
-            BaseTemplateRenderer().get_template('')
+            BaseRenderer().get_template('')
 
 
-class DjangoTemplateRendererTests(SharedTests, SimpleTestCase):
-    renderer = DjangoTemplateRenderer
+class DjangoTemplatesTests(SharedTests, SimpleTestCase):
+    renderer = DjangoTemplates
 
 
 @unittest.skipIf(jinja2 is None, 'jinja2 required')
-class Jinja2TemplateRendererTests(SharedTests, SimpleTestCase):
-    renderer = Jinja2TemplateRenderer
+class Jinja2Tests(SharedTests, SimpleTestCase):
+    renderer = Jinja2
     expected_widget_dir = 'jinja2'
 
 
-class ProjectTemplateRendererTests(SharedTests, SimpleTestCase):
-    renderer = ProjectTemplateRenderer
+class TemplatesSettingTests(SharedTests, SimpleTestCase):
+    renderer = TemplatesSetting
